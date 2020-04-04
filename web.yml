@@ -1,0 +1,62 @@
+---
+# This playbook deploys a full web-server stack on the target machine
+
+- name: Complete webserver setup
+  hosts: mtek_web
+  vars:
+          nginx_conf: nginx.conf
+          php_conf: php.ini
+  remote_user: m_tachefini
+  tasks:
+          - name: Install updates
+            dnf: name=* state=latest
+            become: yes
+          - name: Install nginx
+            become: yes
+            dnf:
+                name: nginx
+                state: latest
+          - name: Install PHP and modules
+            dnf: 
+                name: php-pdo, php-json, php-fpm
+                state: latest
+            become: yes
+          - name: Install git
+            become: yes
+            dnf:
+                name: git
+                state: latest
+          - name: Upload nginx configuration
+            become: yes
+            copy:
+                    src: "{{nginx_conf}}"
+                    dest: /etc/nginx/nginx.conf
+                    owner: root
+                    group: root
+                    mode: '0644'
+
+          - name: Upload PHP configuration
+            become: yes
+            copy:
+                    src: "{{php_conf}}"
+                    dest: /etc/php.ini
+                    owner: root
+                    group: root
+                    mode: '0644'
+          - name: start Nginx
+            become: yes
+            service:
+                    name: nginx
+                    state: started
+
+          - name: Install MySQL
+            become: yes
+            dnf:
+                    name: mysql-server
+                    state: latest
+          - name: Start MySQL
+            become: yes
+            service:
+                    name: mysqld
+                    state: started
+
