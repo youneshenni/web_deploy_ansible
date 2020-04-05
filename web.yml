@@ -1,16 +1,25 @@
 ---
 # This playbook deploys a full web-server stack on the target machine
-
-- name: Complete webserver setup
-  hosts: mtek_web
-  vars:
-          nginx_conf: nginx.conf
-          php_conf: php.ini
+- name: Common tasks
+  hosts: all
   remote_user: m_tachefini
   tasks:
           - name: Install updates
             dnf: name=* state=latest
             become: yes
+ 
+- name: Complete webserver setup
+  hosts: mtek_web
+  vars:
+          nginx_conf: nginx.conf
+          php_conf: php.ini
+          github_front_url: git@github.com:e-lies/Mtek.git
+          github_back_url: git@github.com:e-lies/MtekModels.git
+          github_ssh: id_rsa
+          post_receive: post-receive
+          node_service: gitpull.service
+  remote_user: m_tachefini
+  tasks:
           - name: Install nginx
             become: yes
             dnf:
@@ -34,7 +43,7 @@
                     owner: root
                     group: root
                     mode: '0644'
-
+          
           - name: Upload PHP configuration
             become: yes
             copy:
@@ -43,20 +52,127 @@
                     owner: root
                     group: root
                     mode: '0644'
-          - name: start Nginx
+          - name: Setup html directory
+            become: yes
+            file:
+                    path: /web/www/html
+                    state: directory
+                    mode: '0760'
+                    owner: nginx
+                    group: ftp
+          
+          
+          - name: restart Nginx
             become: yes
             service:
                     name: nginx
-                    state: started
-
-          - name: Install MySQL
+                    state: restarted
+          - name: Upload scripts
+            become: yes
+            copy:
+                    src: "{{post_receive}}"
+                    dest: /web/www/
+                    owner: nginx
+                    group: ftp
+                    mode: "0760"
+          - name: Create .ssh folder for nginx
+            become: yes
+            file:
+                    path: /var/lib/nginx/.ssh
+                    state: directory
+                    mode: '0760'
+                    owner: nginx
+                    group: ftp
+          - name: Setup git SSH key
+            become: yes
+            copy:
+                    src: "{{github_ssh}}"
+                    dest: /var/lib/nginx/.ssh/id_rsa
+                    owner: nginx
+                    group: ftp
+                    mode: "0760"
+          - name: Clone git repository for the server
+            become: yes
+            git:
+                    accept_hostkey: yes
+                    dest: /web/www/Models
+                    force: yes
+                    key_file: /var/lib/nginx/.ssh/id_rsa
+                    remote: origin
+                    repo: "{{github_back_url}}"
+                    umask: "0007"
+          - name: Clone git repository for the client
+            become: yes
+            git:
+                    accept_hostkey: yes
+                    dest: /web/www/Mtek
+                    force: yes
+                    key_file: /var/lib/nginx/.ssh/id_rsa
+                    remote: origin
+                    repo: "{{github_front_url}}"
+                    umask: "0007"
+          - name: Edit file ownership for the web folder
+            become: yes
+            file:
+                    path: /web
+                    state: directory
+                    owner: nginx
+                    group: ftp
+                    mode: "0760"
+                    recurse: yes
+          - name: Install wget
             become: yes
             dnf:
-                    name: mysql-server
+                    name: wget
                     state: latest
-          - name: Start MySQL
+          
+          - name: Add the javascript script as a daemon
             become: yes
-            service:
-                    name: mysqld
+            copy:
+                    src: "{{node_service}}"
+                    dest: "/etc/systemd/system/gitpull.service"
+                    owner: root
+                    group: root
+                    mode: '0660'
+          
+          
+          - name: Download NodeJS
+            get_url: 
+                url: https://nodejs.org/dist/v12.16.1/node-v12.16.1-linux-x64.tar.xz
+                dest: .
+
+          - name: Extract NodeJS
+            unarchive:
+                    dest: .
+                    src:  node-v12.16.1-linux-x64.tar.xz
+                    remote_src: yes
+          - name: Copy node files
+            become: yes
+            shell: cp node-v12.16.1-linux-x64/* /usr -r
+          - name: Enable the node service
+            become: yes
+            systemd:
+                    enabled: yes
+                    force: yes
+                    daemon-reload: yes
+                    name: "{{node_service}}"
                     state: started
+ 
+
+
+
+#- name: Mysql
+#  hosts: mysql
+#  remote_user: m_tachefini
+#  tasks:
+#          - name: Install MySQL
+#            become: yes
+#            dnf:
+#                    name: mysql-server
+#                    state: latest
+#          - name: Start MySQL
+#            become: yes
+#            service:
+#                    name: mysqld
+#                    state: started
 

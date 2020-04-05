@@ -1,0 +1,14 @@
+[Unit]
+Description=Nodejs server for git pull
+
+[Service]
+ExecStart=node /web/www/post-receive/post-receive.js
+Restart=always
+User=nginx
+Group=nginx
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/web/www/
+
+[Install]
+WantedBy=multi-user.target
