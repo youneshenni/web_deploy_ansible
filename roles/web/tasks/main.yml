@@ -1,9 +1,9 @@
 ---
 - name: Common tasks for all hosts (Update)
-  import: update
+  import_tasks: update
 - name: Setup webserver (Nginx)
-  import: web
+  import_tasks: web
 - name: Install Node.js
-  import: install_node
+  import_tasks: install_node
 - name: Synchronize with github 
-  import: github_synchronize
+  import_tasks: github_synchronize
