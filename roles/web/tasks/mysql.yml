@@ -1,7 +1,7 @@
 - name: Install MySQL
   become: yes
   dnf:
-          name: mysql-server mysql
+          name: mysql-server, mysql
           state: latest
 - name: Start server
   systemd:
