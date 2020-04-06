@@ -5,7 +5,7 @@
           state: latest
 - name: Start server
   systemd:
-    name: mysql
+    name: mysqld
     state: started
 - name: Upload PHP MySQL configuration script
   copy:
