@@ -4,4 +4,5 @@
   hosts: all
   remote_user: m_tachefini
   roles:
-    web
+    - web
+    
