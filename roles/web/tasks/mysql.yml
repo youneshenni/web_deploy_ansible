@@ -30,7 +30,7 @@
     check_implicit_admin: yes
     name: mtek_web
     password: mtek2020sangoku4
-    update_password: yes
+    update_password: always
     priv: "Mtek.*:ALL"
     host: '%'
   become: yes  
