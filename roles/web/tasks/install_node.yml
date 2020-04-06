@@ -30,6 +30,7 @@
 - name: Copy node files
   become: yes
   shell: cp node-v12.16.1-linux-x64/* /usr -r
+  when: result.stat.exists
 - name: Enable the node service
   become: yes
   systemd:
