@@ -8,6 +8,10 @@
   systemd:
     name: mysqld
     state: started
+- name: Install Python MySQL driver
+  become: yes
+  pip:
+    name: PyMySQL
 - name: Upload PHP MySQL configuration script
   become: yes
   copy:
