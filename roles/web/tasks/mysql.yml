@@ -22,7 +22,7 @@
     group: ftp
 - name: Create MySQL Database
   mysql_db:
-    name: all
+    name: mtek
     target: /web/www/html/Mtek/Mtek.sql
   become: yes  
 - name: Create a MySQL user
