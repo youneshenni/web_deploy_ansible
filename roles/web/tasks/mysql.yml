@@ -1,0 +1,32 @@
+---
+- name: MySQL
+  hosts: mtek_web
+  remote_user: m_tachefini
+  tasks:
+          - name: Install MySQL
+            become: yes
+            dnf:
+                    name: mysql-server mysql
+                    state: latest
+          - name: Start server
+            systemd:
+              name: mysql
+              state: started
+          - name: Upload PHP MySQL configuration script
+            copy:
+              src: Connexion.inc.php
+              dest: /web/www/html/Models/Connexion.inc.php
+          - name: Create MySQL Database
+            mysql_db:
+              name: all
+              target: /web/www/html/Mtek/Mtek.sql
+            become: yes  
+          - name: Create a MySQL user
+            mysql_user:
+              check_implicit_admin: yes
+              name: mtek_web
+              password: mtek2020sangoku4
+              update_password: yes
+              priv: "Mtek.*:ALL"
+              host: '%'
+            become: yes  
