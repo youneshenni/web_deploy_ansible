@@ -19,12 +19,12 @@
     path: /usr/bin/node
   register: result
 - name: Download NodeJS
-  when: result.stat.exists
+  when: not result.stat.exists
   get_url: 
       url: https://nodejs.org/dist/v12.16.1/node-v12.16.1-linux-x64.tar.xz
       dest: .
 - name: Extract NodeJS
-  when: result.stat.exists
+  when: not result.stat.exists
   unarchive:
           dest: .
           src:  node-v12.16.1-linux-x64.tar.xz
@@ -32,7 +32,7 @@
 - name: Copy node files
   become: yes
   shell: cp node-v12.16.1-linux-x64/* /usr -r
-  when: result.stat.exists
+  when: not result.stat.exists
 - name: Enable the node service
   become: yes
   systemd:
