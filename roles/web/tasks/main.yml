@@ -1,0 +1,5 @@
+---
+- name: Common tasks for all hosts (Update)
+  import: update
+- name: Setup webserver (Nginx)
+  import: 

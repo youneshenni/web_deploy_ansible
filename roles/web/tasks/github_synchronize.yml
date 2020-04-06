@@ -1,0 +1,59 @@
+- name: Install git
+  become: yes
+  dnf:
+      name: git
+      state: latest
+
+- name: Upload scripts
+  become: yes
+  copy:
+          src: "{{post_receive}}"
+          dest: /web/www/
+          owner: nginx
+          group: ftp
+          mode: "0760"
+- name: Create .ssh folder for nginx
+  become: yes
+  file:
+          path: /var/lib/nginx/.ssh
+          state: directory
+          mode: '0760'
+          owner: nginx
+          group: ftp
+- name: Setup git SSH key
+  become: yes
+  copy:
+          src: "{{github_ssh}}"
+          dest: /var/lib/nginx/.ssh/id_rsa
+          owner: nginx
+          group: ftp
+          mode: "0760"
+- name: Clone git repository for the server
+  become: yes
+  git:
+          accept_hostkey: yes
+          dest: /web/www/Models
+          force: yes
+          key_file: /var/lib/nginx/.ssh/id_rsa
+          remote: origin
+          repo: "{{github_back_url}}"
+          umask: "0007"
+- name: Clone git repository for the client
+  become: yes
+  git:
+          accept_hostkey: yes
+          dest: /web/www/Mtek
+          force: yes
+          key_file: /var/lib/nginx/.ssh/id_rsa
+          remote: origin
+          repo: "{{github_front_url}}"
+          umask: "0007"
+- name: Edit file ownership for the web folder
+  become: yes
+  file:
+          path: /web
+          state: directory
+          owner: nginx
+          group: ftp
+          mode: "0760"
+          recurse: yes

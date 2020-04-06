@@ -1,0 +1,7 @@
+---
+- name: Install updates
+  dnf: 
+    name: '*'
+    state: latest
+  become: yes
+ 

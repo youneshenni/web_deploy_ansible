@@ -1,0 +1,42 @@
+- name: Install nginx
+  become: yes
+  dnf:
+    name: nginx
+    state: latest
+- name: Install PHP and modules
+  dnf: 
+    name: php-pdo, php-json, php-fpm
+    state: latest
+    become: yes
+- name: Upload nginx configuration
+  become: yes
+  copy:
+    src: "{{nginx_conf}}"
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Upload PHP configuration
+  become: yes
+  copy:
+    src: "{{php_conf}}"
+    dest: /etc/php.ini
+    owner: root
+    group: root
+    mode: '0644'
+- name: Setup html directory
+  become: yes
+  file:
+    path: /web/www/html
+    state: directory
+    mode: '0760'
+    owner: nginx
+    group: ftp
+
+
+- name: restart Nginx
+  become: yes
+  service:
+    name: nginx
+    state: restarted
