@@ -7,7 +7,7 @@
   dnf: 
     name: php-pdo, php-json, php-fpm
     state: latest
-    become: yes
+  become: yes
 - name: Upload nginx configuration
   become: yes
   copy:
