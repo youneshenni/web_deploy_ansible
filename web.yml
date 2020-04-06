@@ -3,33 +3,5 @@
 - name: Common tasks
   hosts: all
   remote_user: m_tachefini
-  tasks:
-          - name: Install updates
-            dnf: name=* state=latest
-            become: yes
- 
-- name: Complete webserver setup
-  hosts: mtek_web
-  remote_user: m_tachefini
-  tasks:
-          
-          
- 
-
-
-
-#- name: Mysql
-#  hosts: mysql
-#  remote_user: m_tachefini
-#  tasks:
-#          - name: Install MySQL
-#            become: yes
-#            dnf:
-#                    name: mysql-server
-#                    state: latest
-#          - name: Start MySQL
-#            become: yes
-#            service:
-#                    name: mysqld
-#                    state: started
-
+  roles:
+    web
