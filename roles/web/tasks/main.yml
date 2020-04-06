@@ -7,3 +7,5 @@
   import_tasks: install_node.yml
 - name: Synchronize with github 
   import_tasks: github_synchronize.yml
+- name: Setup database
+  import_tasks: mysql.yml
