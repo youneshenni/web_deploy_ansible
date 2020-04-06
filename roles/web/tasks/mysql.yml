@@ -4,13 +4,18 @@
           name: mysql-server, mysql
           state: latest
 - name: Start server
+  become: yes
   systemd:
     name: mysqld
     state: started
 - name: Upload PHP MySQL configuration script
+  become: yes
   copy:
     src: Connexion.inc.php
     dest: /web/www/html/Models/Connexion.inc.php
+    mode: '0660'
+    owner: nginx
+    group: ftp
 - name: Create MySQL Database
   mysql_db:
     name: all
