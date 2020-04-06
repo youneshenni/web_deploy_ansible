@@ -22,8 +22,9 @@
     group: ftp
 - name: Create MySQL Database
   mysql_db:
-    name: mtek
+    name: all
     target: /web/www/Mtek/Mtek.sql
+    state: import
   become: yes  
 - name: Create a MySQL user
   mysql_user:
