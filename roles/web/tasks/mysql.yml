@@ -15,6 +15,7 @@
 - name: Upload PHP MySQL configuration script
   become: yes
   copy:
+    directory_mode: /web/www/html/Models/
     src: Connexion.inc.php
     dest: /web/www/html/Models/Connexion.inc.php
     mode: '0660'
