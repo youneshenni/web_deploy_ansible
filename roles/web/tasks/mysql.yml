@@ -16,7 +16,7 @@
   become: yes
   copy:
     src: Connexion.inc.php
-    dest: /web/www/html/Models/Connexion.inc.php
+    dest: /web/www/Connexion.inc.php
     mode: '0660'
     owner: nginx
     group: ftp
