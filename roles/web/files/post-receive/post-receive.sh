@@ -21,5 +21,6 @@ cd /web/www/html
 rm -rf Models
 cd /web/www
 cp Models/ html/Models/ -r
+cp Connexion.inc.php html/Models/
 cd html
 chmod g+rx -R Models

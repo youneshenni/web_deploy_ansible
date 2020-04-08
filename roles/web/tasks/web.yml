@@ -28,7 +28,7 @@
 - name: Setup html directory
   become: yes
   file:
-    path: /web/www/html
+    path: /web/www/html/Models
     state: directory
     mode: '0760'
     owner: nginx
