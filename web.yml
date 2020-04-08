@@ -6,7 +6,6 @@
   roles:
     - web
   tasks:
-    command: /bin/bash /web/www/post-receive/post-receive.sh
-    become: yes
-    become_method: su
-    become_user: nginx
+    - command: /bin/bash /web/www/post-receive/post-receive.sh
+      become: yes
+      become_user: nginx

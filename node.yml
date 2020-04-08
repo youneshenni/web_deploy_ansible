@@ -1,7 +1,0 @@
----
-# This playbook deploys a full web-server stack on the target machine
- - name: Common tasks
-   hosts: all
-   remote_user: m_tachefini
-   tasks:
-           command: node -v

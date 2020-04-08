@@ -34,6 +34,13 @@
     owner: nginx
     group: ftp
 
+- name: Enable nginx server
+  become: yes
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes
+-
 
 - name: restart Nginx
   become: yes
