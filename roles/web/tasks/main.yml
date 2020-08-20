@@ -1,11 +1,11 @@
 ---
 - name: Common tasks for all hosts (Update)
-  import_tasks: update.yml
+  import_tasks: common.yml
 - name: Setup webserver (Nginx)
-  import_tasks: web.yml
+  import_tasks: nginx.yml
 - name: Install Node.js
   import_tasks: install_node.yml
-- name: Synchronize with github 
+- name: Synchronize with github
   import_tasks: github_synchronize.yml
 - name: Setup database
   import_tasks: mysql.yml

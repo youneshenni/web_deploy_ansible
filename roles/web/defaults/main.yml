@@ -1,6 +1,4 @@
-nginx_conf: nginx.conf
-php_conf: php.ini
-github_front_url: git@github.com:e-lies/Mtek.git
+github_front_url: git@github.com:younabobo/delivery.git
 github_back_url: git@github.com:e-lies/MtekModels.git
 github_ssh: id_rsa
 post_receive: post-receive

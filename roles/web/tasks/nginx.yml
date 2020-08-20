@@ -1,36 +1,33 @@
-- name: Install nginx
+- name: Install nginx, PHP and PHP modules
   become: yes
   dnf:
-    name: nginx
+    name: nginx, php-fpm, php-pdo, php-json
     state: latest
-- name: Install PHP and modules
-  dnf: 
-    name: php-pdo, php-json, php-fpm
-    state: latest
-  become: yes
+
 - name: Upload nginx configuration
   become: yes
   copy:
-    src: "{{nginx_conf}}"
+    src: "nginx.conf"
     dest: /etc/nginx/nginx.conf
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
 
 - name: Upload PHP configuration
   become: yes
   copy:
-    src: "{{php_conf}}"
+    src: php.ini
     dest: /etc/php.ini
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
+
 - name: Setup html directory
   become: yes
   file:
     path: /web/www/html/Models
     state: directory
-    mode: '0760'
+    mode: "0760"
     owner: nginx
     group: ftp
 
@@ -40,7 +37,6 @@
     name: nginx
     state: started
     enabled: yes
--
 
 - name: restart Nginx
   become: yes
