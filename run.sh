@@ -8,5 +8,5 @@ ansible-playbook -i inventory web.yml -e "mysql_password=$password" &&
 echo "Execution of the script complete, here's the pubic SSH key:" &&
 cat roles/web/files/secrets/id_rsa.pub &&
 echo "Server secret: $(cat roles/web/files/secrets/server.secret)" &&
-echo "Front secret: $(cat roles/web/files/secrets/front.secret)" &&
+echo "Front secret: $(cat roles/web/files/secrets/front.secret)"
 rm roles/web/files/secrets/* -f
