@@ -4,8 +4,10 @@
 - name: Setup webserver (Nginx)
   import_tasks: nginx.yml
 - name: Install Node.js
-  import_tasks: install_node.yml
-- name: Synchronize with github
-  import_tasks: github_synchronize.yml
+  import_tasks: node.yml
+- name: GitHub webhook setup
+  import_tasks: webhook.yml
 - name: Setup database
   import_tasks: mysql.yml
+- name: Common tasks post-execution
+  import_tasks: post.yml

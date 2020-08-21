@@ -1,0 +1,9 @@
+- name: Edit file ownership for the web folder
+  become: yes
+  file:
+    path: /web
+    state: directory
+    owner: nginx
+    group: nginx
+    mode: "0760"
+    recurse: yes

@@ -1,5 +1,6 @@
 github_front_url: git@github.com:younabobo/delivery.git
 github_back_url: git@github.com:e-lies/MtekModels.git
-github_ssh: id_rsa
-post_receive: post-receive
-node_service: gitpull.service
+front_secret: "{{lookup('file', 'secrets/front.secret')}}"
+back_secret: "{{lookup('file', 'secrets/back.secret')}}"
+mysql_user: delivery
+mysql_db: delivery

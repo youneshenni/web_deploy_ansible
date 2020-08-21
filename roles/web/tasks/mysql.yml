@@ -1,8 +1,8 @@
 - name: Install MySQL
   become: yes
   dnf:
-          name: mysql-server, mysql
-          state: latest
+    name: mysql-server, mysql
+    state: latest
 - name: Start server
   become: yes
   systemd:
@@ -18,21 +18,48 @@
   copy:
     src: Connexion.inc.php
     dest: /web/www/Connexion.inc.php
-    mode: '0660'
+    mode: "0660"
     owner: nginx
-    group: ftp
+    group: nginx
+- name: Edit MySQL DB name in Connexion.inc.php
+  become: yes
+  replace:
+    path: /web/www/Connexion.inc.php
+    regexp: "{mysql_db}"
+    replace: "{{mysql_db}}"
+- name: Edit MySQL user name in Connexion.inc.php
+  become: yes
+  replace:
+    path: /web/www/Connexion.inc.php
+    regexp: "{mysql_user}"
+    replace: "{{mysql_user}}"
+- name: Edit MySQL password in Connexion.inc.php
+  become: yes
+  replace:
+    path: /web/www/Connexion.inc.php
+    regexp: "{mysql_password}"
+    replace: "{{mysql_password}}"
+
+- name: Copy MySQL script
+  become: yes
+  copy:
+    src: "MySQL.sql"
+    dest: /web/www/MySQL.sql
+    mode: "0660"
+    owner: nginx
+    group: nginx
 - name: Create MySQL Database
   mysql_db:
     name: all
-    target: /web/www/Mtek/Mtek.sql
+    target: /web/www/MySQL.sql
     state: import
-  become: yes  
+  become: yes
 - name: Create a MySQL user
   mysql_user:
     check_implicit_admin: yes
-    name: mtek_web
-    password: mtek2020sangoku4
+    name: "{{mysql_user}}"
+    password: "{{mysql_password}}"
     update_password: always
-    priv: "mtek.*:ALL"
-    host: '%'
-  become: yes  
+    priv: "{{mysql_db}}.*:ALL"
+    host: "%"
+  become: yes

@@ -29,7 +29,7 @@
     state: directory
     mode: "0760"
     owner: nginx
-    group: ftp
+    group: nginx
 
 - name: Enable nginx server
   become: yes

@@ -8,8 +8,8 @@ User=nginx
 Group=nginx
 Environment=PATH=/usr/bin:/usr/local/bin
 Environment=NODE_ENV=production
-Environment=FRONT_SECRET=df0a64ff6e4a0c93103dd34472f47bfe64b7139d
-Environment=BACK_SECRET=5b261bc88e3d8de22bae9bb6fb5426cd68630f9e
+Environment=FRONT_SECRET={{front}}
+Environment=BACK_SECRET={{back}}
 WorkingDirectory=/web/www/
 
 [Install]
