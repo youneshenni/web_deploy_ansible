@@ -1,7 +1,7 @@
 - name: Install nginx, PHP and PHP modules
   become: yes
   dnf:
-    name: nginx, php-fpm, php-pdo, php-json
+    name: nginx, php-fpm, php-pdo, php-json, php-mysqlnd
     state: latest
     update_cache: yes
 
