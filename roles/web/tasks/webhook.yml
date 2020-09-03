@@ -21,6 +21,7 @@
     cmd: yarn add winston
 
 - name: Create logs folder
+  become: yes
   file:
     mode: "0700"
     group: nginx
@@ -41,14 +42,14 @@
   become: yes
   replace:
     path: /etc/systemd/system/webhook.service
-    regexp: "{{front}}"
+    regexp: "{front}"
     replace: "{{front_secret}}"
 
 - name: Copy back secret
   become: yes
   replace:
     path: /etc/systemd/system/webhook.service
-    regexp: "{{back}}"
+    regexp: "{back}"
     replace: "{{back_secret}}"
 
 - name: Enable nginx server
@@ -72,14 +73,22 @@
     mode: "0760"
     owner: nginx
     group: nginx
-- name: Setup git SSH key
+- name: Setup git backend SSH key
   become: yes
   copy:
     src: "secrets/id_rsa"
     dest: /var/lib/nginx/.ssh/id_rsa
     owner: nginx
     group: nginx
-    mode: "0760"
+    mode: "0600"
+- name: Setup git frontend SSH key
+  become: yes
+  copy:
+    src: "secrets/id_rsa2"
+    dest: /var/lib/nginx/.ssh/id_rsa2
+    owner: nginx
+    group: nginx
+    mode: "0600"
 - name: Clone git repository for the server
   become: yes
   git:
@@ -96,7 +105,15 @@
     accept_hostkey: yes
     dest: /web/www/Mtek
     force: yes
-    key_file: /var/lib/nginx/.ssh/id_rsa
+    key_file: /var/lib/nginx/.ssh/id_rsa2
     remote: origin
     repo: "{{github_front_url}}"
     umask: "0007"
+- name: Make nginx owner of the two repositories
+  become: yes
+  file:
+    path: /web/www/
+    state: directory
+    recurse: yes
+    owner: nginx
+    group: nginx

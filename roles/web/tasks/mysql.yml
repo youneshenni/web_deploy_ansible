@@ -17,26 +17,26 @@
   become: yes
   copy:
     src: Connexion.inc.php
-    dest: /web/www/Connexion.inc.php
+    dest: /web/www/html/Connexion.inc.php
     mode: "0660"
     owner: nginx
     group: nginx
 - name: Edit MySQL DB name in Connexion.inc.php
   become: yes
   replace:
-    path: /web/www/Connexion.inc.php
+    path: /web/www/html/Connexion.inc.php
     regexp: "{mysql_db}"
     replace: "{{mysql_db}}"
 - name: Edit MySQL user name in Connexion.inc.php
   become: yes
   replace:
-    path: /web/www/Connexion.inc.php
+    path: /web/www/html/Connexion.inc.php
     regexp: "{mysql_user}"
     replace: "{{mysql_user}}"
 - name: Edit MySQL password in Connexion.inc.php
   become: yes
   replace:
-    path: /web/www/Connexion.inc.php
+    path: /web/www/html/Connexion.inc.php
     regexp: "{mysql_password}"
     replace: "{{mysql_password}}"
 

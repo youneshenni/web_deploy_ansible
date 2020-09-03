@@ -1,0 +1,14 @@
+- name: Create swapfile
+  command: dd if=/dev/zero of=/swapfile count=8192 bs=1MiB
+  become: yes
+- name: Change permissions
+  file:
+    name: /swapfile
+    mode: "0600"
+  become: yes
+- name: Make it SWAP
+  command: mkswap /swapfile
+  become: yes
+- name: Enable Swapping
+  command: swapon /swapfile
+  become: yes

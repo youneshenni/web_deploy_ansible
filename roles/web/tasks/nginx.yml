@@ -3,6 +3,7 @@
   dnf:
     name: nginx, php-fpm, php-pdo, php-json
     state: latest
+    update_cache: yes
 
 - name: Upload nginx configuration
   become: yes
@@ -18,6 +19,15 @@
   copy:
     src: php.ini
     dest: /etc/php.ini
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Upload PHP-FPM configuration
+  become: yes
+  copy:
+    src: "www.conf"
+    dest: /etc/php-fpm.d/www.conf
     owner: root
     group: root
     mode: "0644"

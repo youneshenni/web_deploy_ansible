@@ -1,6 +1,6 @@
 ---
-- name: Common tasks for all hosts (Update)
-  import_tasks: common.yml
+- name: Add SWAP
+  import_tasks: swap.yml
 - name: Setup webserver (Nginx)
   import_tasks: nginx.yml
 - name: Install Node.js
