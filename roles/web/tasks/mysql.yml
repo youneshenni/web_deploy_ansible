@@ -3,6 +3,11 @@
   dnf:
     name: mysql-server, mysql
     state: latest
+- name: Copy MySQL configuration file
+  become: yes
+  copy:
+    src: "mysql-server.cnf"
+    dest: /etc/my.cnf.d/mysql-server.cnf
 - name: Start server
   become: yes
   systemd:

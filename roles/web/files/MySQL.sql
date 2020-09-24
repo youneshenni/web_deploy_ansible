@@ -340,7 +340,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ALLOW_INVALID_DATES' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`younes`@`localhost`*/ /*!50003 TRIGGER `valider_tournee` AFTER UPDATE ON `Recuperation` FOR EACH ROW UPDATE Tournee SET validee = 1, fin_reelle = NOW() WHERE id = (SELECT id FROM v_tournees_realisees) AND id = new.id_tournee */;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `valider_tournee` AFTER UPDATE ON `Recuperation` FOR EACH ROW UPDATE Tournee SET validee = 1, fin_reelle = NOW() WHERE id = (SELECT id FROM v_tournees_realisees) AND id = new.id_tournee */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1324,7 +1324,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_absence_livreur` AS select `a`.`id` AS `id`,`a`.`debut` AS `debut`,`a`.`fin` AS `fin`,`a`.`remarques` AS `remarques`,`l`.`id` AS `id_livreur`,`l`.`nom` AS `nom_livreur`,`l`.`prenom` AS `prenom_livreur`,`l`.`email` AS `email_livreur`,`l`.`photo` AS `photo_livreur` from (`Absence` `a` join `Livreur` `l` on((`a`.`id_livreur` = `l`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1342,7 +1342,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_client` AS select `Client`.`id` AS `id`,`Client`.`nom` AS `nom`,`Client`.`prenom` AS `prenom`,`Client`.`pays` AS `pays`,`Client`.`code_postal` AS `code_postal`,`Client`.`ville` AS `ville`,`Client`.`email` AS `email`,`Client`.`telephone` AS `telephone`,`Client`.`adresse` AS `adresse`,`Client`.`empreinte_digitale` AS `empreinte_digitale`,`Client`.`signature_digitale` AS `signature_digitale` from `Client` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1360,7 +1360,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_client_tournees` AS select `Client`.`id` AS `id`,`Livraison`.`id` AS `id_destination`,`Tournee`.`id` AS `id_tournee`,'tournee' AS `type`,`Client`.`nom` AS `nom`,`Client`.`prenom` AS `prenom`,`Client`.`pays` AS `pays`,`Client`.`code_postal` AS `code_postal`,`Client`.`ville` AS `ville`,`Client`.`telephone` AS `telephone`,`Client`.`adresse` AS `adresse`,`Client`.`empreinte_digitale` AS `empreinte_digitale`,`Client`.`signature_digitale` AS `signature_digitale` from ((`Tournee` join `Livraison` on((`Tournee`.`id` = `Livraison`.`id_tournee`))) join `Client` on((`Client`.`id` = `Livraison`.`id`))) union all select `Client`.`id` AS `id`,`Recuperation`.`id` AS `id_destination`,`Tournee`.`id` AS `id_tournee`,'tournee' AS `type`,`Client`.`nom` AS `nom`,`Client`.`prenom` AS `prenom`,`Client`.`pays` AS `pays`,`Client`.`code_postal` AS `code_postal`,`Client`.`ville` AS `ville`,`Client`.`telephone` AS `telephone`,`Client`.`adresse` AS `adresse`,`Client`.`empreinte_digitale` AS `empreinte_digitale`,`Client`.`signature_digitale` AS `signature_digitale` from ((`Tournee` join `Recuperation` on((`Tournee`.`id` = `Recuperation`.`id_tournee`))) join `Client` on((`Client`.`id` = `Recuperation`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1378,7 +1378,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_colis` AS select `Colis`.`id` AS `id`,`Colis`.`date_recuperation` AS `date_recuperation`,`Colis`.`longueur` AS `longueur`,`Colis`.`largeur` AS `largeur`,`Colis`.`poids` AS `poids`,`Colis`.`hauteur` AS `hauteur`,`Colis`.`livre` AS `livre`,`Colis`.`id_depot` AS `id_depot`,`Colis`.`id_livraison` AS `id_livraison`,`Colis`.`id_recuperation` AS `id_recuperation`,`Colis`.`date_livraison` AS `date_livraison`,`Colis`.`code_barre` AS `code_barre` from `Colis` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1396,7 +1396,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_colis_depot_livraison` AS select `Colis`.`id` AS `id`,`Colis`.`date_recuperation` AS `date_recuperation`,`Colis`.`longueur` AS `longueur`,`Colis`.`largeur` AS `largeur`,`Colis`.`poids` AS `poids`,`Colis`.`hauteur` AS `hauteur`,`Colis`.`livre` AS `livre`,`Colis`.`id_depot` AS `id_depot`,`Colis`.`id_livraison` AS `id_livraison`,`Colis`.`id_recuperation` AS `id_recuperation`,`Colis`.`date_livraison` AS `date_livraison`,`Colis`.`code_barre` AS `code_barre`,`Depot`.`adresse` AS `adresse_depot`,`Livraison`.`adresse` AS `adresse_livraison`,`Livraison`.`realise` AS `realise_livraison`,`Livraison`.`urgence` AS `urgence_livraison`,`Livraison`.`signature` AS `signature_livraison`,`Livraison`.`emprunte` AS `emprunte_livraison`,`Livraison`.`id_tournee` AS `id_tournee_livraison`,`Livraison`.`id_client` AS `id_client_livraison`,`Livraison`.`rating` AS `rating_livraison`,`Livraison`.`remarques` AS `remarques_livraison` from ((`Colis` join `Depot` on((`Colis`.`id_depot` = `Depot`.`id`))) join `Livraison` on((`Colis`.`id_livraison` = `Livraison`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1414,7 +1414,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_colis_depot_recuperation` AS select `Colis`.`id` AS `id`,`Colis`.`date_recuperation` AS `date_recuperation`,`Colis`.`longueur` AS `longueur`,`Colis`.`largeur` AS `largeur`,`Colis`.`poids` AS `poids`,`Colis`.`hauteur` AS `hauteur`,`Colis`.`livre` AS `livre`,`Colis`.`id_depot` AS `id_depot`,`Colis`.`id_recuperation` AS `id_recuperation`,`Colis`.`code_barre` AS `code_barre`,`Depot`.`adresse` AS `adresse_depot`,`Recuperation`.`adresse` AS `adresse_recuperation`,`Recuperation`.`realise` AS `realise_recuperation`,`Recuperation`.`urgence` AS `urgence_recuperation`,`Recuperation`.`signature` AS `signature_recuperation`,`Recuperation`.`emprunte` AS `emprunte_recuperation`,`Recuperation`.`id_tournee` AS `id_tournee_recuperation`,`Recuperation`.`id_client` AS `id_client_recuperation`,`Recuperation`.`rating` AS `rating_recuperation`,`Recuperation`.`remarques` AS `remarques_recuperation` from ((`Colis` join `Depot` on((`Colis`.`id_depot` = `Depot`.`id`))) join `Recuperation` on((`Colis`.`id_recuperation` = `Recuperation`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1432,7 +1432,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_colis_destination` AS select `v_destination`.`id` AS `id`,`v_destination`.`adresse` AS `adresse`,`v_destination`.`realise` AS `realise`,`v_destination`.`urgence` AS `urgence`,`v_destination`.`signature` AS `signature`,`v_destination`.`emprunte` AS `emprunte`,`v_destination`.`id_tournee` AS `id_tournee`,`v_destination`.`id_client` AS `id_client`,`v_destination`.`rating` AS `rating`,`v_destination`.`remarques` AS `remarques`,`v_destination`.`type` AS `type`,`Colis`.`id` AS `id_colis`,`Colis`.`date_recuperation` AS `date_recuperation`,`Colis`.`longueur` AS `longueur`,`Colis`.`largeur` AS `largeur`,`Colis`.`poids` AS `poids`,`Colis`.`hauteur` AS `hauteur`,`Colis`.`livre` AS `livre`,`Colis`.`id_depot` AS `id_depot`,`Colis`.`id_livraison` AS `id_livraison`,`Colis`.`id_recuperation` AS `id_recuperation`,`Colis`.`date_livraison` AS `date_livraison`,`Colis`.`code_barre` AS `code_barre` from (`Colis` join `v_destination` on(((`Colis`.`id_livraison` = `v_destination`.`id`) or (`Colis`.`id_recuperation` = `v_destination`.`id`)))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1450,7 +1450,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_colis_destination_short` AS select `v_destination`.`id` AS `id`,min(`v_destination`.`type`) AS `type`,min(`Colis`.`id`) AS `id_colis`,min(`Colis`.`code_barre`) AS `code_barre`,min(`v_destination`.`adresse`) AS `adresse` from (`Colis` join `v_destination` on(((`Colis`.`id_livraison` = `v_destination`.`id`) or (`Colis`.`id_recuperation` = `v_destination`.`id`)))) group by `v_destination`.`id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1468,7 +1468,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_colis_destination_short_recuperation` AS select `v_destination`.`id` AS `id`,max(`v_destination`.`type`) AS `type`,min(`Colis`.`id`) AS `id_colis`,min(`Colis`.`code_barre`) AS `code_barre`,max(`v_destination`.`adresse`) AS `adresse` from (`Colis` join `v_destination` on(((`Colis`.`id_livraison` = `v_destination`.`id`) or (`Colis`.`id_recuperation` = `v_destination`.`id`)))) group by `v_destination`.`id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1486,7 +1486,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_colis_livraison` AS select `Colis`.`id` AS `id`,`Colis`.`date_recuperation` AS `date_recuperation`,`Colis`.`longueur` AS `longueur`,`Colis`.`largeur` AS `largeur`,`Colis`.`poids` AS `poids`,`Colis`.`hauteur` AS `hauteur`,`Colis`.`livre` AS `livre`,`Colis`.`id_depot` AS `id_depot`,`Colis`.`id_livraison` AS `id_livraison`,`Colis`.`id_recuperation` AS `id_recuperation`,`Colis`.`date_livraison` AS `date_livraison`,`Colis`.`code_barre` AS `code_barre`,`Livraison`.`adresse` AS `adresse_livraison`,`Livraison`.`realise` AS `realise_livraison`,`Livraison`.`urgence` AS `urgence_livraison`,`Livraison`.`signature` AS `signature_livraison`,`Livraison`.`emprunte` AS `emprunte_livraison`,`Livraison`.`id_tournee` AS `id_tournee_livraison`,`Livraison`.`id_client` AS `id_client_livraison`,`Livraison`.`rating` AS `rating_livraison`,`Livraison`.`remarques` AS `remarques_livraison` from (`Colis` join `Livraison` on((`Colis`.`id_livraison` = `Livraison`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1504,7 +1504,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_colis_recuperation` AS select `Colis`.`id` AS `id`,`Colis`.`date_recuperation` AS `date_recuperation`,`Colis`.`longueur` AS `longueur`,`Colis`.`largeur` AS `largeur`,`Colis`.`poids` AS `poids`,`Colis`.`hauteur` AS `hauteur`,`Colis`.`livre` AS `livre`,`Colis`.`id_depot` AS `id_depot`,`Colis`.`id_livraison` AS `id_livraison`,`Colis`.`id_recuperation` AS `id_recuperation`,`Colis`.`date_livraison` AS `date_livraison`,`Colis`.`code_barre` AS `code_barre`,`Recuperation`.`adresse` AS `adresse_recuperation`,`Recuperation`.`realise` AS `realise_recuperation`,`Recuperation`.`urgence` AS `urgence_recuperation`,`Recuperation`.`signature` AS `signature_recuperation`,`Recuperation`.`emprunte` AS `emprunte_recuperation`,`Recuperation`.`id_tournee` AS `id_tournee_recuperation`,`Recuperation`.`id_client` AS `id_client_recuperation`,`Recuperation`.`rating` AS `rating_recuperation`,`Recuperation`.`remarques` AS `remarques_recuperation` from (`Colis` join `Recuperation` on((`Colis`.`id_recuperation` = `Recuperation`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1522,7 +1522,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_depot` AS select `Depot`.`id` AS `id`,`Depot`.`adresse` AS `adresse` from `Depot` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1540,7 +1540,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_derniere_maintenance_vehicule` AS select `s`.`id` AS `id`,`s`.`marque` AS `marque`,`s`.`id_operation` AS `id_operation`,`s`.`date_maintenance` AS `date_maintenance`,`m`.`id` AS `id_maintenance`,`m`.`remarques` AS `remarques`,`o`.`duree` AS `duree`,(`s`.`date_maintenance` + interval `o`.`duree` day) AS `prochaine_maintenance` from ((`Maintenance` `m` join (select `v`.`id` AS `id`,`v`.`marque` AS `marque`,`m`.`id_operation` AS `id_operation`,max(`m`.`date`) AS `date_maintenance` from (`Vehicule` `v` join `Maintenance` `m` on((`m`.`id_vehicule` = `v`.`id`))) group by `v`.`id`,`m`.`id_operation`) `s` on(((`s`.`date_maintenance` = `m`.`date`) and (`s`.`id` = `m`.`id_vehicule`) and (`s`.`id_operation` = `m`.`id_operation`)))) join `Operation` `o` on((`m`.`id_operation` = `o`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1558,7 +1558,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_destination` AS select `Livraison`.`id` AS `id`,`Livraison`.`adresse` AS `adresse`,`Livraison`.`realise` AS `realise`,`Livraison`.`urgence` AS `urgence`,`Livraison`.`signature` AS `signature`,`Livraison`.`emprunte` AS `emprunte`,`Livraison`.`id_tournee` AS `id_tournee`,`Livraison`.`id_client` AS `id_client`,`Livraison`.`rating` AS `rating`,`Livraison`.`remarques` AS `remarques`,'livraison' AS `type` from `Livraison` union all select `Recuperation`.`id` AS `id`,`Recuperation`.`adresse` AS `adresse`,`Recuperation`.`realise` AS `realise`,`Recuperation`.`urgence` AS `urgence`,`Recuperation`.`signature` AS `signature`,`Recuperation`.`emprunte` AS `emprunte`,`Recuperation`.`id_tournee` AS `id_tournee`,`Recuperation`.`id_client` AS `id_client`,`Recuperation`.`rating` AS `rating`,`Recuperation`.`remarques` AS `remarques`,'recuperation' AS `type` from `Recuperation` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1576,7 +1576,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_destination_tournee` AS select `v_destination`.`id` AS `id`,`v_destination`.`adresse` AS `adresse`,`v_destination`.`realise` AS `realise`,`v_destination`.`urgence` AS `urgence`,`v_destination`.`signature` AS `signature`,`v_destination`.`emprunte` AS `emprunte`,`v_destination`.`id_tournee` AS `id_tournee`,`v_destination`.`id_client` AS `id_client`,`v_destination`.`rating` AS `rating`,`Tournee`.`creation` AS `creation`,`Tournee`.`attribution` AS `attribution`,`Tournee`.`debut_prevu` AS `debut_prevu`,`Tournee`.`debut_reel` AS `debut_reel`,`Tournee`.`fin_prevue` AS `fin_prevue`,`Tournee`.`fin_reelle` AS `fin_reelle`,`Tournee`.`remarques` AS `remarques_tournee`,`Tournee`.`validee` AS `validee`,`Tournee`.`urgence` AS `urgence_tournee`,`Tournee`.`id_livreur` AS `id_livreur`,`Tournee`.`id_vehicule` AS `id_vehicule`,`Tournee`.`id_dispatcheur` AS `id_dispatcheur` from (`v_destination` join `Tournee` on((`Tournee`.`id` = `v_destination`.`id_tournee`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1594,7 +1594,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_dispatcheur` AS select `Dispatcheur`.`id` AS `id`,`Dispatcheur`.`nom` AS `nom`,`Dispatcheur`.`prenom` AS `prenom`,`Dispatcheur`.`mdp` AS `mdp`,`Dispatcheur`.`email` AS `email`,`Dispatcheur`.`id_site` AS `id_site` from `Dispatcheur` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1612,7 +1612,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_livraison` AS select `Livraison`.`id` AS `id`,`Livraison`.`adresse` AS `adresse`,`Livraison`.`realise` AS `realise`,`Livraison`.`urgence` AS `urgence`,`Livraison`.`signature` AS `signature`,`Livraison`.`emprunte` AS `emprunte`,`Livraison`.`id_tournee` AS `id_tournee`,`Livraison`.`id_client` AS `id_client`,`Livraison`.`rating` AS `rating`,`Livraison`.`remarques` AS `remarques` from `Livraison` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1630,7 +1630,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_livraison_tournee` AS select `Livraison`.`id` AS `id`,`Livraison`.`adresse` AS `adresse`,`Livraison`.`realise` AS `realise`,`Livraison`.`urgence` AS `urgence`,`Livraison`.`signature` AS `signature`,`Livraison`.`emprunte` AS `emprunte`,`Livraison`.`id_tournee` AS `id_tournee`,`Livraison`.`id_client` AS `id_client`,`Livraison`.`rating` AS `rating`,`Livraison`.`remarques` AS `remarques`,`Tournee`.`creation` AS `creation_tournee`,`Tournee`.`attribution` AS `attribution_tournee`,`Tournee`.`debut_prevu` AS `debut_prevu_tournee`,`Tournee`.`debut_reel` AS `debut_reel_tournee`,`Tournee`.`fin_prevue` AS `fin_prevue_tournee`,`Tournee`.`fin_reelle` AS `fin_reelle_tournee`,`Tournee`.`remarques` AS `remarques_tournee`,`Tournee`.`validee` AS `validee_tournee`,`Tournee`.`urgence` AS `urgence_tournee`,`Tournee`.`id_livreur` AS `id_livreur_tournee`,`Tournee`.`id_vehicule` AS `id_vehicule_tournee`,`Tournee`.`id_dispatcheur` AS `id_dispatcheur_tournee` from (`Livraison` join `Tournee` on((`Livraison`.`id_tournee` = `Tournee`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1648,7 +1648,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_livreur` AS select `Livreur`.`id` AS `id`,`Livreur`.`nom` AS `nom`,`Livreur`.`prenom` AS `prenom`,`Livreur`.`mdp` AS `mdp`,`Livreur`.`email` AS `email`,`Livreur`.`photo` AS `photo` from `Livreur` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1666,7 +1666,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_maintenance` AS select `Maintenance`.`id` AS `id`,`Maintenance`.`date` AS `date`,`Maintenance`.`remarques` AS `remarques`,`Maintenance`.`id_operation` AS `id_operation`,`Maintenance`.`id_vehicule` AS `id_vehicule` from `Maintenance` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1684,7 +1684,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_maintenance_retard` AS select `s`.`id` AS `id`,`s`.`marque` AS `marque`,`s`.`id_operation` AS `id_operation`,`s`.`date_maintenance` AS `date_maintenance`,`m`.`id` AS `id_maintenance`,`m`.`remarques` AS `remarques`,`o`.`duree` AS `duree`,(`s`.`date_maintenance` + interval `o`.`duree` day) AS `prochaine_maintenance` from ((`Maintenance` `m` join (select `v`.`id` AS `id`,`v`.`marque` AS `marque`,`m`.`id_operation` AS `id_operation`,max(`m`.`date`) AS `date_maintenance` from (`Vehicule` `v` join `Maintenance` `m` on((`m`.`id_vehicule` = `v`.`id`))) group by `v`.`id`,`m`.`id_operation`) `s` on(((`s`.`date_maintenance` = `m`.`date`) and (`s`.`id` = `m`.`id_vehicule`) and (`s`.`id_operation` = `m`.`id_operation`)))) join `Operation` `o` on((`m`.`id_operation` = `o`.`id`))) where ((`s`.`date_maintenance` + interval `o`.`duree` day) < cast(now() as date)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1702,7 +1702,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_maintenances_vehicule` AS select `m`.`id` AS `id`,'date' AS `date`,`m`.`remarques` AS `remarques`,`m`.`id_operation` AS `id_operation`,`m`.`id_vehicule` AS `id_vehicule`,`v`.`marque` AS `marque`,`v`.`couleur` AS `couleur`,`v`.`n_immatriculation` AS `n_immatriculation`,`v`.`date_acquisition` AS `date_acquisition`,`v`.`distance_parcourue` AS `distance_parcourue`,`v`.`poids_max` AS `poids_max`,`v`.`hauteur_max` AS `hauteur_max`,`v`.`largeur_max` AS `largeur_max`,`v`.`longueur_max` AS `longueur_max` from (`Maintenance` `m` join `Vehicule` `v` on((`v`.`id` = `m`.`id_vehicule`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1720,7 +1720,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_recuperation` AS select `Recuperation`.`id` AS `id`,`Recuperation`.`adresse` AS `adresse`,`Recuperation`.`realise` AS `realise`,`Recuperation`.`urgence` AS `urgence`,`Recuperation`.`signature` AS `signature`,`Recuperation`.`emprunte` AS `emprunte`,`Recuperation`.`id_tournee` AS `id_tournee`,`Recuperation`.`id_client` AS `id_client`,`Recuperation`.`rating` AS `rating`,`Recuperation`.`remarques` AS `remarques` from `Recuperation` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1738,7 +1738,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_recuperation_tournee` AS select `Recuperation`.`id` AS `id`,`Recuperation`.`adresse` AS `adresse`,`Recuperation`.`realise` AS `realise`,`Recuperation`.`urgence` AS `urgence`,`Recuperation`.`signature` AS `signature`,`Recuperation`.`emprunte` AS `emprunte`,`Recuperation`.`id_tournee` AS `id_tournee`,`Recuperation`.`id_client` AS `id_client`,`Recuperation`.`rating` AS `rating`,`Recuperation`.`remarques` AS `remarques`,`Tournee`.`creation` AS `creation_tournee`,`Tournee`.`attribution` AS `attribution_tournee`,`Tournee`.`debut_prevu` AS `debut_prevu_tournee`,`Tournee`.`debut_reel` AS `debut_reel_tournee`,`Tournee`.`fin_prevue` AS `fin_prevue_tournee`,`Tournee`.`fin_reelle` AS `fin_reelle_tournee`,`Tournee`.`remarques` AS `remarques_tournee`,`Tournee`.`validee` AS `validee_tournee`,`Tournee`.`urgence` AS `urgence_tournee`,`Tournee`.`id_livreur` AS `id_livreur_tournee`,`Tournee`.`id_vehicule` AS `id_vehicule_tournee`,`Tournee`.`id_dispatcheur` AS `id_dispatcheur_tournee` from (`Recuperation` join `Tournee` on((`Recuperation`.`id_tournee` = `Tournee`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1756,7 +1756,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_tournee` AS select `t`.`id` AS `id`,`t`.`creation` AS `creation`,`t`.`attribution` AS `attribution`,`t`.`debut_prevu` AS `debut_prevu`,`t`.`debut_reel` AS `debut_reel`,`t`.`fin_prevue` AS `fin_prevue`,`t`.`fin_reelle` AS `fin_reelle`,`t`.`remarques` AS `remarques`,`t`.`validee` AS `validee`,`t`.`urgence` AS `urgence`,`t`.`id_livreur` AS `id_livreur`,`t`.`id_vehicule` AS `id_vehicule`,`t`.`id_dispatcheur` AS `id_dispatcheur` from `Tournee` `t` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1774,7 +1774,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_tournee_depot` AS select `Depot`.`id` AS `id`,`Tournee`.`creation` AS `creation`,`Tournee`.`attribution` AS `attribution`,`Tournee`.`debut_prevu` AS `debut_prevu`,`Tournee`.`debut_reel` AS `debut_reel`,`Tournee`.`fin_prevue` AS `fin_prevue`,`Tournee`.`fin_reelle` AS `fin_reelle`,`Tournee`.`remarques` AS `remarques`,`Tournee`.`validee` AS `validee`,`Tournee`.`urgence` AS `urgence`,`Tournee`.`id_livreur` AS `id_livreur`,`Tournee`.`id_vehicule` AS `id_vehicule`,`Tournee`.`id_dispatcheur` AS `id_dispatcheur`,`Tournee`.`id` AS `id_tournee`,`Depot`.`adresse` AS `adresse_depot` from (((`Tournee` join `v_destination` on((`v_destination`.`id_tournee` = `Tournee`.`id`))) join `Colis` on(((`Colis`.`id_livraison` = `v_destination`.`id`) or (`Colis`.`id_recuperation` = `v_destination`.`id`)))) join `Depot` on((`Colis`.`id_depot` = `Depot`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1792,7 +1792,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_tournee_destination_colis` AS select `Colis`.`id` AS `id`,`Tournee`.`creation` AS `creation`,`Tournee`.`attribution` AS `attribution`,`Tournee`.`debut_prevu` AS `debut_prevu`,`Tournee`.`debut_reel` AS `debut_reel`,`Tournee`.`fin_prevue` AS `fin_prevue`,`Tournee`.`fin_reelle` AS `fin_reelle`,`Tournee`.`id` AS `id_tournee`,`Colis`.`code_barre` AS `code_barre` from ((`Tournee` join `v_destination` on((`v_destination`.`id_tournee` = `Tournee`.`id`))) join `Colis` on(((`Colis`.`id_livraison` = `v_destination`.`id`) or (`Colis`.`id_recuperation` = `v_destination`.`id`)))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1810,7 +1810,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_tournee_destinations` AS select `Tournee`.`id` AS `id`,`Tournee`.`remarques` AS `remarques`,`Tournee`.`urgence` AS `urgence`,`Tournee`.`creation` AS `creation`,`Tournee`.`attribution` AS `attribution`,`Tournee`.`debut_prevu` AS `debut_prevu`,`Tournee`.`debut_reel` AS `debut_reel`,`Tournee`.`fin_prevue` AS `fin_prevue`,`Tournee`.`fin_reelle` AS `fin_reelle`,`Tournee`.`validee` AS `validee`,`Tournee`.`id_livreur` AS `id_livreur`,`Tournee`.`id_vehicule` AS `id_vehicule`,`Tournee`.`id_dispatcheur` AS `id_dispatcheur`,`Recuperation`.`adresse` AS `adresse`,`Recuperation`.`realise` AS `realise`,`Recuperation`.`signature` AS `signature`,`Recuperation`.`emprunte` AS `emprunte`,`Recuperation`.`id_tournee` AS `id_tournee`,`Recuperation`.`id_client` AS `id_client`,`Recuperation`.`rating` AS `rating`,('type' = 'recuperation') AS `'type'='recuperation'` from (`Tournee` join `Recuperation` on(((`Tournee`.`id` = `Recuperation`.`id`) and (`Tournee`.`remarques` = `Recuperation`.`remarques`) and (`Tournee`.`urgence` = `Recuperation`.`urgence`)))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1828,7 +1828,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_tournee_disponible_livreur` AS select `Tournee`.`id` AS `id`,`Tournee`.`creation` AS `creation`,`Tournee`.`attribution` AS `attribution`,`Tournee`.`debut_prevu` AS `debut_prevu`,`Tournee`.`debut_reel` AS `debut_reel`,`Tournee`.`fin_prevue` AS `fin_prevue`,`Tournee`.`fin_reelle` AS `fin_reelle`,`Tournee`.`remarques` AS `remarques`,`Tournee`.`validee` AS `validee`,`Tournee`.`urgence` AS `urgence`,`Tournee`.`id_livreur` AS `id_livreur`,`Tournee`.`id_vehicule` AS `id_vehicule`,`Tournee`.`id_dispatcheur` AS `id_dispatcheur` from `Tournee` where (`Tournee`.`id_livreur` is null) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1846,7 +1846,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_tournee_disponible_vehicule` AS select `Tournee`.`id` AS `id`,`Tournee`.`creation` AS `creation`,`Tournee`.`attribution` AS `attribution`,`Tournee`.`debut_prevu` AS `debut_prevu`,`Tournee`.`debut_reel` AS `debut_reel`,`Tournee`.`fin_prevue` AS `fin_prevue`,`Tournee`.`fin_reelle` AS `fin_reelle`,`Tournee`.`remarques` AS `remarques`,`Tournee`.`validee` AS `validee`,`Tournee`.`urgence` AS `urgence`,`Tournee`.`id_livreur` AS `id_livreur`,`Tournee`.`id_vehicule` AS `id_vehicule`,`Tournee`.`id_dispatcheur` AS `id_dispatcheur` from `Tournee` where (`Tournee`.`id_vehicule` is null) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1864,7 +1864,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_tournees_livreur` AS select `t`.`id` AS `id`,`t`.`creation` AS `creation`,`t`.`attribution` AS `attribution`,`t`.`debut_prevu` AS `debut_prevu`,`t`.`debut_reel` AS `debut_reel`,`t`.`fin_prevue` AS `fin_prevue`,`t`.`fin_reelle` AS `fin_reelle`,`t`.`remarques` AS `remarques`,`t`.`validee` AS `validee`,`t`.`urgence` AS `urgence`,`t`.`id_livreur` AS `id_livreur`,`t`.`id_vehicule` AS `id_vehicule`,`t`.`id_dispatcheur` AS `id_dispatcheur`,`l`.`nom` AS `nom_livreur`,`l`.`prenom` AS `prenom_livreur`,`l`.`email` AS `email_livreur`,`l`.`photo` AS `photo_livreur` from (`Tournee` `t` join `Livreur` `l` on((`t`.`id_livreur` = `l`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1882,7 +1882,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_tournees_realisees` AS select `t`.`id` AS `id`,`t`.`creation` AS `creation`,`t`.`attribution` AS `attribution`,`t`.`debut_prevu` AS `debut_prevu`,`t`.`debut_reel` AS `debut_reel`,`t`.`fin_prevue` AS `fin_prevue`,`t`.`fin_reelle` AS `fin_reelle`,`t`.`remarques` AS `remarques`,`t`.`validee` AS `validee`,`t`.`urgence` AS `urgence`,`t`.`id_livreur` AS `id_livreur`,`t`.`id_vehicule` AS `id_vehicule`,`t`.`id_dispatcheur` AS `id_dispatcheur` from (`Tournee` `t` join `v_destination` `r` on((`t`.`id` = `r`.`id_tournee`))) group by `r`.`id_tournee` having (sum((1 - `r`.`realise`)) = 0) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1900,7 +1900,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_tournees_vehicule` AS select `t`.`id` AS `id`,`t`.`creation` AS `creation`,`t`.`attribution` AS `attribution`,`t`.`debut_prevu` AS `debut_prevu`,`t`.`debut_reel` AS `debut_reel`,`t`.`fin_prevue` AS `fin_prevue`,`t`.`fin_reelle` AS `fin_reelle`,`t`.`remarques` AS `remarques`,`t`.`validee` AS `validee`,`t`.`urgence` AS `urgence`,`t`.`id_livreur` AS `id_livreur`,`t`.`id_vehicule` AS `id_vehicule`,`t`.`id_dispatcheur` AS `id_dispatcheur`,`v`.`marque` AS `marque`,`v`.`couleur` AS `couleur`,`v`.`n_immatriculation` AS `n_immatriculation`,`v`.`date_acquisition` AS `date_acquisition`,`v`.`distance_parcourue` AS `distance_parcourue`,`v`.`poids_max` AS `poids_max`,`v`.`hauteur_max` AS `hauteur_max`,`v`.`largeur_max` AS `largeur_max`,`v`.`longueur_max` AS `longueur_max` from (`Tournee` `t` join `Vehicule` `v` on((`t`.`id_vehicule` = `v`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1918,7 +1918,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_vehicule` AS select `v`.`id` AS `id`,`v`.`marque` AS `marque`,`v`.`couleur` AS `couleur`,`v`.`n_immatriculation` AS `n_immatriculation`,`v`.`date_acquisition` AS `date_acquisition`,`v`.`distance_parcourue` AS `distance_parcourue`,`v`.`poids_max` AS `poids_max`,`v`.`hauteur_max` AS `hauteur_max`,`v`.`largeur_max` AS `largeur_max`,`v`.`longueur_max` AS `longueur_max`,if((`d`.`id` is null),false,true) AS `disponible`,if((`m`.`id_vehicule` is null),false,true) AS `maintenable` from ((`Vehicule` `v` left join `v_vehicule_disponible` `d` on((`v`.`id` = `d`.`id`))) left join `v_vehicule_maintenable` `m` on((`m`.`id_vehicule` = `v`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1936,7 +1936,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_vehicule_disponible` AS select `Vehicule`.`id` AS `id`,`Vehicule`.`marque` AS `marque`,`Vehicule`.`n_immatriculation` AS `n_immatriculation` from (`Vehicule` left join (select `v`.`id` AS `id_unavailable` from (`Vehicule` `v` join `Tournee` `t` on((`v`.`id` = `t`.`id_vehicule`))) where ((now() > `t`.`debut_prevu`) and (now() < `t`.`fin_prevue`)) group by `v`.`id`) `u` on((`u`.`id_unavailable` = `Vehicule`.`id`))) where (`u`.`id_unavailable` is null) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1954,7 +1954,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`younes`@`localhost` SQL SECURITY DEFINER */
+/*!50013 */
 /*!50001 VIEW `v_vehicule_maintenable` AS select `d`.`id_vehicule` AS `id`,`d`.`id_vehicule` AS `id_vehicule`,`v`.`poids_max` AS `poids_max`,`d`.`marque` AS `marque`,`v`.`n_immatriculation` AS `n_immatriculation`,`d`.`prochaine_maintenance` AS `prochaine_maintenance`,`m`.`id` AS `id_maintenance` from ((((select `m`.`id` AS `id_vehicule`,`m`.`marque` AS `marque`,min(`m`.`prochaine_maintenance`) AS `prochaine_maintenance` from `v_maintenance_retard` `m` group by `id_vehicule`) `d` join `Maintenance` `m` on((`m`.`id_vehicule` = `d`.`id_vehicule`))) join `Operation` `o` on((`m`.`id_operation` = `o`.`id`))) join `Vehicule` `v` on((`d`.`id_vehicule` = `v`.`id`))) where ((`m`.`date` + interval `o`.`duree` day) = `d`.`prochaine_maintenance`) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;

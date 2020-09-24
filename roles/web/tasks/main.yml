@@ -3,6 +3,8 @@
   import_tasks: swap.yml
 - name: Setup webserver (Nginx)
   import_tasks: nginx.yml
+- name: Setup SELinux
+  import_tasks: selinux.yml
 - name: Install Node.js
   import_tasks: node.yml
 - name: GitHub webhook setup
@@ -11,3 +13,5 @@
   import_tasks: mysql.yml
 - name: Common tasks post-execution
   import_tasks: post.yml
+- name: Pull from git repositories
+  import_tasks: gitpull.yml

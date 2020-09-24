@@ -1,0 +1,14 @@
+- name: Install required module for configuring SELinux
+  become: yes
+  dnf:
+    name: policycoreutils-python-utils
+- name: Change default context for publichtml folder
+  become: yes
+  sefcontext:
+    target: /web/www/html
+    setype: httpd_sys_content_t
+- name: Change default context for writable folders
+  become: yes
+  sefcontext:
+    target: /web/www/html/Images
+    setype: httpd_sys_rw_content_t

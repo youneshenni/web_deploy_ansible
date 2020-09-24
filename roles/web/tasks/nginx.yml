@@ -53,3 +53,11 @@
   service:
     name: nginx
     state: restarted
+
+- name: Change ownership for PHP liraries, sessions and cookies
+  become: yes
+  file:
+    group: nginx
+    owner: nginx
+    recurse: yes
+    path: /var/lib/php
