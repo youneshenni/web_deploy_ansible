@@ -1,7 +1,11 @@
 ---
 - name: Install updates
-  dnf: 
-    name: '*'
+  dnf:
+    name: "*"
     state: latest
+    update_cache: yes
   become: yes
- 
+- name: Add EPEL repo
+  become: yes
+  dnf:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm

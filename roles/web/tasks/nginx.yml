@@ -1,18 +1,88 @@
-- name: Install nginx, PHP and PHP modules
+- name: Install nginx, PHP, PHP modules and certbot
   become: yes
   dnf:
-    name: nginx, php-fpm, php-pdo, php-json, php-mysqlnd
+    name: nginx, php-fpm, php-pdo, php-json, php-mysqlnd, certbot, python3-certbot-nginx
     state: latest
     update_cache: yes
 
 - name: Upload nginx configuration
   become: yes
   copy:
-    src: "nginx.conf"
+    src: "nginx/nginx.conf"
     dest: /etc/nginx/nginx.conf
     owner: root
     group: root
     mode: "0644"
+- name: Create sites directory
+  become: yes
+  file:
+    name: /etc/nginx/sites-available
+    state: directory
+- name: Create nginx config directory
+  become: yes
+  file:
+    name: /etc/nginx/nginxconfig.io
+    state: directory
+- name: Create missing renewal hook directory
+  become: yes
+  file:
+    name: /etc/letsencrypt/renewal-hooks/post
+    state: directory
+
+- name: Upload nginx website configuration
+  become: yes
+  copy:
+    src: "nginx/site.conf"
+    dest: "/etc/nginx/sites-available/{{website_name}}.conf"
+    owner: root
+    group: root
+    mode: "0644"
+- name: Copy server name
+  become: yes
+  replace:
+    path: "/etc/nginx/sites-available/{{website_name}}.conf"
+    regexp: "example.com"
+    replace: "{{website_name}}"
+- name: Upload encryption configuration
+  become: yes
+  copy:
+    src: "nginx/letsencrypt.conf"
+    dest: /etc/nginx/nginxconfig.io/letsencrypt.conf
+    owner: root
+    group: root
+    mode: "0644"
+- name: Upload security configuration
+  become: yes
+  copy:
+    src: "nginx/security.conf"
+    dest: /etc/nginx/nginxconfig.io/security.conf
+    owner: root
+    group: root
+    mode: "0644"
+- name: Upload general configuration
+  become: yes
+  copy:
+    src: "nginx/general.conf"
+    dest: /etc/nginx/nginxconfig.io/general.conf
+    owner: root
+    group: root
+    mode: "0644"
+- name: Upload nginx PHP-FPM configuration
+  become: yes
+  copy:
+    src: "nginx/php_fastcgi.conf"
+    dest: /etc/nginx/nginxconfig.io/php_fastcgi.conf
+    owner: root
+    group: root
+    mode: "0644"
+- name: Upload NGiNX reload script
+  become: yes
+  copy:
+    src: "nginx/nginx-reload.sh"
+    dest: /etc/letsencrypt/renewal-hooks/post/nginx-reload.sh
+    owner: root
+    group: root
+    mode: "0755"
 
 - name: Upload PHP configuration
   become: yes
@@ -50,7 +120,7 @@
 
 - name: restart Nginx
   become: yes
-  service:
+  systemd:
     name: nginx
     state: restarted
 
@@ -61,3 +131,30 @@
     owner: nginx
     recurse: yes
     path: /var/lib/php
+- name: Change ownership for encryption key files
+  become: yes
+  file:
+    group: nginx
+    owner: nginx
+    recurse: yes
+    path: /web/www/_letsencrypt
+    state: directory
+- name: Comment SSL directives in configuration
+  become: yes
+  shell: sed -i -r 's/(listen .*443)/\1;#/g; s/(ssl_(certificate|certificate_key|trusted_certificate) )/#;#\1/g' /etc/nginx/sites-available/delivery.conf && nginx -t
+- name: Reload NGINX
+  become: yes
+  systemd:
+    daemon_reload: yes
+    name: nginx
+- name: Generate SSL certificates
+  become: yes
+  command: "certbot certonly --webroot -d {{domain_name}} --email iseddik@mtek-informatique.com -w /web/www/_letsencrypt -n --agree-tos --force-renewal"
+- name: Uncomment SSL directives in configuration
+  become: yes
+  shell: sed -i -r 's/#?;#//g' /etc/nginx/sites-available/delivery.conf && nginx -t
+- name: Reload NGINX
+  become: yes
+  systemd:
+    daemon_reload: yes
+    name: nginx

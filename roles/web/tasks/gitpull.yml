@@ -1,7 +1,6 @@
 - command: /bin/bash /web/www/post-receive/front.sh
       become: yes
       become_user: nginx
-  tasks:
-    - command: /bin/bash /web/www/post-receive/server.sh
-      become: yes
-      become_user: nginx
+- command: /bin/bash /web/www/post-receive/server.sh
+  become: yes
+  become_user: nginx

@@ -1,4 +1,6 @@
 ---
+- name: Execute common tasks
+  import_tasks: common.yml
 - name: Add SWAP
   import_tasks: swap.yml
 - name: Setup webserver (Nginx)

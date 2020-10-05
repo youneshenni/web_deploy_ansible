@@ -12,3 +12,6 @@
   sefcontext:
     target: /web/www/html/Images
     setype: httpd_sys_rw_content_t
+- name: Restore SELinux context for public HTML folder recursively
+  become: yes
+  command: restorecon -R /web/www/html
