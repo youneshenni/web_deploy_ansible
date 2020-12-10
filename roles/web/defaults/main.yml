@@ -5,4 +5,4 @@ back_secret: "{{lookup('file', 'secrets/server.secret')}}"
 mysql_user: delivery
 mysql_db: delivery
 website_name: delivery
-domain_name: 35.205.242.58
+domain_name: 167.86.107.200
